@@ -18,7 +18,7 @@ getgenv().funckey_19dlckx = function()
 				while char and char.Parent and char:FindFirstChild("Humanoid") do
 					local nh = 220
 					local h = 0
-					h = 220 / (((100 / char.Humanoid) * 2) - 1)
+					h = 220 / (((100 / char.Humanoid.Health) * 2) - 1)
 					hl.FillColor = Color3.fromHSV(h / 255, 1, 1)
 					hl.OutlineColor = Color3.fromHSV(h / 255, 1, 0.576471)
 					task.wait()
