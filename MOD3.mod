@@ -1,14 +1,14 @@
 getgenv().funckey_19dlckx = function() 
 	print("ESP For players has loaded!")
 	local function ProcessChar(char)
-		if char:IsDescendantOf(game.Workspace.Players.Killers) and char:IsA("Model") then
+		if char:IsDescendantOf(game.Workspace.Players.Killers) and char:IsA("Model") and char:FindFirstChild("Humanoid") then
 			local hl = Instance.new("Highlight",char)
 			hl.FillColor = Color3.new(1,1,1)
 			hl.FillTransparency = 0.9
 			hl.OutlineColor = Color3.fromRGB(147,147,147)
 			hl.OutlineTransparency = 0.6
 		end
-		if char:IsDescendantOf(game.Workspace.Players.Survivors) and char:IsA("Model") then
+		if char:IsDescendantOf(game.Workspace.Players.Survivors) and char:IsA("Model") and char:FindFirstChild("Humanoid") then
 			local hl = Instance.new("Highlight",char)
 			--hl.FillColor = Color3.fromHSV(0.611111, 1, 1)--Color3.new(0, 0.333333, 1)
 			hl.FillTransparency = 0.8
