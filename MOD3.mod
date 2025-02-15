@@ -25,7 +25,7 @@ getgenv().funckey_19dlckx = function()
 			end)
 		end
 	end
-	game.Workspace.Players.Killer.ChildAdded:Connect(function(desc)
+	game.Workspace.Players.Killers.ChildAdded:Connect(function(desc)
 		ProcessChar(desc)
 	end)
 	game.Workspace.Players.Survivor.ChildAdded:Connect(function(desc)
