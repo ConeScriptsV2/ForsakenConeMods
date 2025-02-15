@@ -7,4 +7,4 @@ getgenv().funckey_ak105ff = function()
         end)
     end
 ----MOD_TABLESPLIT----
-{"Function":"funckey_ak105ff","Description":"Extends your hitbox to hit stuff easier.","Title":"Hitbox Extender","Harmful":true}
+{"Function":"funckey_ak105ff","Description":"Extends your hitbox to hit stuff easier. [Not garunteed]","Title":"Hitbox Extender","Harmful":true}
