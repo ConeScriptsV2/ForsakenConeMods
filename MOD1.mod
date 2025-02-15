@@ -6,6 +6,5 @@ getgenv().funckey_ak105ff = function()
             end
         end)
     end
---Do not edit RawString, It gets overwrited in the marketplace.
 ----MOD_TABLESPLIT----
-{"Function":"funckey_ak105ff","Description":"Extends your hitbox to hit stuff easier.","Title":"Hitbox Extender","Harmful":true,"RawString":""}
+{"Function":"funckey_ak105ff","Description":"Extends your hitbox to hit stuff easier.","Title":"Hitbox Extender","Harmful":true}
