@@ -15,7 +15,7 @@ getgenv().funckey_19dlckx = function()
 			hl.OutlineColor = Color3.fromRGB(0, 49, 147)
 			hl.OutlineTransparency = 0.5
 			task.spawn(function()
-				while char and char.Parent and char:FindFirstChild("Humanoid") do
+				while char and char.Parent and char:FindFirstChild("Humanoid") and hl and hl.Parent do
 					local nh = 220
 					local h = 0
 					h = 220 - (210 - (char.Humanoid.Health * 2.1))--220 / (((100 / char.Humanoid.Health) * 2) - 1)
