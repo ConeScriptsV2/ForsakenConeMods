@@ -12,7 +12,7 @@ getgenv().funckey_19dlckx = function()
 			local hl = Instance.new("Highlight",char)
 			--hl.FillColor = Color3.fromHSV(0.611111, 1, 1)--Color3.new(0, 0.333333, 1)
 			hl.FillTransparency = 0.8
-			hl.OutlineColor = Color3.fromRGB(0, 49, 147)
+			--hl.OutlineColor = Color3.fromRGB(0, 49, 147)
 			hl.OutlineTransparency = 0.5
 			task.spawn(function()
 				while char and char.Parent and char:FindFirstChild("Humanoid") and hl and hl.Parent do
