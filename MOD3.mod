@@ -16,9 +16,8 @@ getgenv().funckey_19dlckx = function()
 			hl.OutlineTransparency = 0.5
 			task.spawn(function()
 				while char and char.Parent and char:FindFirstChild("Humanoid") and hl and hl.Parent do
-					local nh = 220
 					local h = 0
-					h = 220 - (210 - (char.Humanoid.Health * 2.1))--220 / (((100 / char.Humanoid.Health) * 2) - 1)
+					h = char.Humanoid.Health
 					hl.FillColor = Color3.fromHSV(h / 255, 1, 1)
 					hl.OutlineColor = Color3.fromHSV(h / 255, 1, 0.576471)
 					task.wait()
