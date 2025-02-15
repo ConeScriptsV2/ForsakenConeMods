@@ -3,9 +3,9 @@ getgenv().funckey_19dlckx = function()
 	local function ProcessChar(char)
 		if char:IsDescendantOf(game.Workspace.Players.Killers) and char:IsA("Model") then
 			local hl = Instance.new("Highlight",char)
-			hl.FillColor = Color3.new(1,0,0)
+			hl.FillColor = Color3.new(1,1,1)
 			hl.FillTransparency = 0.9
-			hl.OutlineColor = Color3.fromRGB(147,0,0)
+			hl.OutlineColor = Color3.fromRGB(147,147,147)
 			hl.OutlineTransparency = 0.6
 		end
 		if char:IsDescendantOf(game.Workspace.Players.Survivors) and char:IsA("Model") then
