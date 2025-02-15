@@ -35,7 +35,7 @@ getgenv().funckey_19dlckx = function()
 		ProcessChar(v)
 	end
 
-	for i,v in pairs(game.Workspace.Killers:GetChildren()) do
+	for i,v in pairs(game.Workspace.Players.Killers:GetChildren()) do
 		ProcessChar(v)
 	end
 end
