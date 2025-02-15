@@ -8,7 +8,7 @@ getgenv().funckey_29kbaqk = function()
                         task.spawn(function() v.Remotes.RE:FireServer() end)
                     end
                   end
-                task.wait(.25 + (math.random(1,4) / 10))
+                task.wait(.05 + (math.random(1,4) / 50))
               end
             end
         end)
