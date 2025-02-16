@@ -54,7 +54,7 @@ if isfile and writefile and readfile and isfolder and makefolder and delfile the
 		makefolder("ForsakenMods")
 	end
     local PressedOkay = true
-    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Version.Text ~= "Version: 9193 (Latest)" then
+    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Version.Text ~= "Version: 9200 (Latest)" then
         cpl.Text = "[[Alert!]]"
         PressedOkay = false
         local tmplabel = MakeNewLabel("This compile of cones mod manager is not up to date with the current game! Some mods could be patched or broken. Press okay to continue.")
