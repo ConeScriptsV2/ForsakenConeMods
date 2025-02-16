@@ -1,4 +1,6 @@
-getgenv().funckey_azx911l = function() 
+getgenv().funckey_azx911l = function()
+game:GetService("UserInputService").InputBegan:Connect(function(key,fotb)
+if key.KeyCode == Enum.KeyCode.X and not fotb then
 local img = Instance.new("ImageLabel",game:GetService("Players").LocalPlayer.PlayerGui.MainUI.StatusContainer)
 img.Name = "Speed_CS"
 img.BackgroundTransparency = 1
@@ -54,5 +56,7 @@ task.spawn(function()
 end)
 img:Destroy()
 end
+end)
+end
 ----MOD_TABLESPLIT----
-{"Function":"funckey_azx911l","Description":"Gives you a speedboost for 3 seconds.","Title":"Speedboost Effect [3s]","Harmful":true}
+{"Function":"funckey_azx911l","Description":"Gives you a speedboost for 3 seconds once you press X.","Title":"Speedboost Effect [3s]","Harmful":true}
