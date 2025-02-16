@@ -23,7 +23,6 @@ s.SoundId = "rbxasset://START.mp3"
 task.wait(0.1)
 if s.IsLoaded then
     s:Play()
-    s:Destroy()
 local function ScanItem(item)
     if item:IsA("Sound") and table.find(soundEffects,item.SoundId) then
         item.SoundId = "rbxasset://s"..table.find(soundEffects,item.SoundId)..".mp3"
