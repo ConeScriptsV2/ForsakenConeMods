@@ -1,21 +1,3 @@
-local T = Instance.new("Sound",game:GetService("TestService"))
-local Unpropers = {}
-local Proper = true
-for i = 1,15 do
-  T.SoundId = "rbxasset://s"..i..".mp3"
-task.wait(0.06)
-if not T.IsLoaded then
-  Proper = false
-  table.insert(Unpropers,"s"..i..".mp3")
-end
-end
-if not Proper then
-  for i,v in pairs(Unpropers) do
-    writefile(v,game:HttpGet("https://github.com/ConeScriptsV2/VCDBForsaken/raw/refs/heads/main/"..v))
-    getcustomasset(v)
-    task.spawn(function() delfile(v) end)
-  end
-end
 getgenv().funckey_99xzlcz = function() 
 local soundEffects = {
     "rbxassetid://99081289911669",
@@ -79,5 +61,28 @@ s:Destroy()
     warn("The sounds were not installed properly. Check your executor functions, Or ensure they are in DIRECTLY the content folder. If you just installed this, Please wait and try again.")
 end
 end
+task.spawn(function()
+local T = Instance.new("Sound",game:GetService("TestService"))
+local Unpropers = {}
+local Proper = true
+for i = 1,15 do
+  T.SoundId = "rbxasset://s"..i..".mp3"
+task.wait(0.06)
+if not T.IsLoaded then
+  Proper = false
+  table.insert(Unpropers,"s"..i..".mp3")
+end
+end
+if not Proper then
+  for i,v in pairs(Unpropers) do
+    writefile(v,game:HttpGet("https://github.com/ConeScriptsV2/VCDBForsaken/raw/refs/heads/main/"..v))
+    getcustomasset(v)
+    task.spawn(function() delfile(v) end)
+  end
+writefile("START.mp3",game:HttpGet("https://github.com/ConeScriptsV2/VCDBForsaken/raw/refs/heads/main/START.mp3"))
+getcustomasset("START.mp3")
+task.spawn(function() delfile("START.mp3") end)
+end
+end)
 ----MOD_TABLESPLIT----
 {"Function":"funckey_99xzlcz","Description":"Blakinator voice lines for coolkidd normal (From Blake)","Title":"Voice Lines","Harmful":false}
