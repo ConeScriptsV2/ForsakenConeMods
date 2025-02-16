@@ -1,0 +1,307 @@
+if isfile and writefile and readfile and isfolder and makefolder and delfile then
+	game:GetService("Players").LocalPlayer.PlayerGui.MainUI:WaitForChild("StatsScreen",9e9)
+	task.wait()
+	local Contents = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.StatsScreen.StatsContainer.Contents
+	game:GetService("Players").LocalPlayer.PlayerGui.MainUI.StatsScreen.Name = "ModsScreen"
+	game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ModsScreen.StatsContainer.Name = "ModsContainer"
+	local ButtonT = Instance.new("ImageButton")
+	ButtonT.Image = "rbxassetid://19000746528"
+	ButtonT.Size = Contents.SurvivorStats.Size
+	local Button_TextT = Contents.SurvivorStats.Title:Clone()
+	Button_TextT.Parent = ButtonT
+	Button_TextT.Text = "Button"
+	local LabelT = Contents.RbxSpent:Clone()
+	LabelT.Name = "Label"
+	LabelT.Text = "Label"
+	LabelT.TextXAlignment = Enum.TextXAlignment.Center
+	LabelT.LayoutOrder = 0
+	local SideButton = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Sidebar.Buttons.Stats
+	SideButton.Name = "Mods"
+	SideButton.PulloutHolder.PulloutFrame.Title.Text = "Mods"
+	for i,v in pairs(Contents:GetChildren()) do
+		if v:IsA("ImageLabel") or v:IsA("TextLabel") then
+			v:Destroy()
+		end
+	end
+
+	local function MakeNewLabel(text : string)
+		local Label = LabelT:Clone()
+		Label.Text = text
+		Label.Parent = Contents
+		return Label
+	end
+
+	local function MakeNewButton(text : string,func)
+		local Button = ButtonT:Clone()
+		Button.Title.Text = text
+		Button.Parent = Contents
+		if func then
+			Button.MouseButton1Click:Connect(func)
+		end
+		return Button
+	end
+
+	local Title = MakeNewLabel("Cones Mod Manager V2")
+	local fpscl = MakeNewLabel("Thanks for using my custom mod menu! FPS: ")
+	local cpl = MakeNewLabel("[[Home]]")
+	local LM
+	local MM
+	local PN
+	--print("Started Scan")
+	local CapturedMods = {}
+	--print("Exited Scan")
+	if not isfolder("ForsakenMods") then
+		makefolder("ForsakenMods")
+	end
+    local PressedOkay = true
+    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Version.Text ~= "Version: 9193 (Latest)" then
+        cpl.Text = "[[Alert!]]"
+        PressedOkay = false
+        local tmplabel = MakeNewLabel("This compile of cones mod manager is not up to date with the current game! Some mods could be patched or broken. Press okay to continue.")
+        btn = MakeNewButton("Okay",function()
+        btn:Destroy()
+        tmplabel:Destroy()
+        PressedOkay = true
+        cpl.Text = "[[Home]]"
+    end)
+    end
+    while not PressedOkay do
+        task.wait()
+    end
+	local EveryModButton = {}
+	local Temps = {}
+	LM = MakeNewButton("Local Mods",function()
+		LM.Parent = game.CoreGui
+		MM.Parent = game.CoreGui
+		PN.Parent = game.CoreGui
+		cpl.Text = "[[Local Mods]]"
+		table.clear(CapturedMods)
+		local Txt = MakeNewLabel("Getting your locally stored mods, Please wait...")
+		for i = 1,50 do
+			if isfile("ForsakenMods/MOD"..i..".mod") then
+				local BuiltTable
+				loadstring(readfile("ForsakenMods/MOD"..i..".mod"):split("----MOD_TABLESPLIT----")[1])()
+				BuiltTable = game:GetService("HttpService"):JSONDecode(readfile("ForsakenMods/MOD"..i..".mod"):split("----MOD_TABLESPLIT----")[2]:split("\n")[2])
+				BuiltTable["Function"] = getgenv()[tostring(BuiltTable["Function"])]
+				BuiltTable["FileName"] = "MOD"..i..".mod"
+				table.insert(CapturedMods,BuiltTable)
+			else
+				--print("ForsakenMods/MOD"..i..".mod Does not exist! Breaking loop...")
+				--break
+			end
+		end
+		Txt:Destroy()
+		table.insert(EveryModButton,MakeNewButton("Back",function()
+			for i,v in pairs(EveryModButton) do
+				v:Destroy()
+			end
+			table.clear(EveryModButton)
+			cpl.Text = "[[Home]]"
+			LM.Parent = Contents
+			MM.Parent = Contents
+			PN.Parent = Contents
+		end))
+		for i,v in pairs(CapturedMods) do
+			local B = MakeNewButton(v["Title"],function()
+				for i,v in pairs(EveryModButton) do
+					v.Parent = game.CoreGui
+				end
+				table.insert(Temps,MakeNewButton("Back",function()
+					for i,v in pairs(Temps) do
+						v:Destroy()
+					end
+					table.clear(Temps)
+					for i,v in pairs(EveryModButton) do
+						if v and v.Parent then
+							v.Parent = Contents
+						else
+							table.remove(EveryModButton,i)
+						end
+					end
+				end))
+				table.insert(Temps,MakeNewLabel("Title: "..v["Title"]))
+				table.insert(Temps,MakeNewLabel("Harmful: "..tostring(v["Harmful"])))
+				table.insert(Temps,MakeNewLabel("Description: "..v["Description"]))
+				exec = MakeNewButton("Execute",function()
+					exec.Title.Text = "Executed!"
+					task.spawn(function()
+						task.wait(2)
+						if exec and exec:FindFirstChild("Title") then
+							exec.Title.Text = "Execute"
+						end
+					end)
+					v["Function"]()
+				end)
+
+				table.insert(Temps,exec)
+				table.insert(Temps,MakeNewButton("Uninstall",function()
+					for i,v in pairs(Temps) do
+						v.Parent = game.CoreGui
+					end
+					local Label = MakeNewLabel("Uninstalling, Please wait...")
+					delfile("ForsakenMods/"..v["FileName"])
+					Label.Text = "Successfully uninstalled! Returning to home page..."
+					task.wait(2)
+					Label:Destroy()
+					for i,v in pairs(Temps) do
+						v:Destroy()
+					end
+					table.clear(Temps)
+					for i,v in pairs(EveryModButton) do
+						v:Destroy()
+					end
+					table.clear(EveryModButton)
+					cpl.Text = "[[Home]]"
+					LM.Parent = Contents
+					MM.Parent = Contents
+					PN.Parent = Contents
+				end))
+			end)
+			table.insert(EveryModButton,B)
+		end
+	end)
+	MM = MakeNewButton("Mods Marketplace",function()
+		LM.Parent = game.CoreGui
+		MM.Parent = game.CoreGui
+		PN.Parent = game.CoreGui
+		cpl.Text = "[[Mods Marketplace]]"
+		table.clear(CapturedMods)
+		local Txt = MakeNewLabel("Getting the marketplace mods, Please wait...")
+		for i = 1,150 do
+			if game:HttpGet("https://raw.githubusercontent.com/ConeScriptsV2/ForsakenConeMods/refs/heads/main/MOD"..i..".mod") ~= "404: Not Found" then
+				local BuiltTable
+				BuiltTable = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/ConeScriptsV2/ForsakenConeMods/refs/heads/main/MOD"..i..".mod"):split("----MOD_TABLESPLIT----")[2]:split("\n")[2])
+				BuiltTable["RawString"] = game:HttpGet("https://raw.githubusercontent.com/ConeScriptsV2/ForsakenConeMods/refs/heads/main/MOD"..i..".mod")
+				table.insert(CapturedMods,BuiltTable)
+			else
+				print("MOD"..i..".mod Does not exist! Breaking loop...")
+				break
+			end
+		end
+		Txt:Destroy()
+		table.insert(EveryModButton,MakeNewButton("Back",function()
+			for i,v in pairs(EveryModButton) do
+				v:Destroy()
+			end
+			table.clear(EveryModButton)
+			cpl.Text = "[[Home]]"
+			LM.Parent = Contents
+			MM.Parent = Contents
+			PN.Parent = Contents
+		end))
+		for i,v in pairs(CapturedMods) do
+			local B = MakeNewButton(v["Title"],function()
+				for i,v in pairs(EveryModButton) do
+					v.Parent = game.CoreGui
+				end
+				table.insert(Temps,MakeNewButton("Back",function()
+					for i,v in pairs(Temps) do
+						v:Destroy()
+					end
+					table.clear(Temps)
+					for i,v in pairs(EveryModButton) do
+						if v and v.Parent then
+							v.Parent = Contents
+						else
+							table.remove(EveryModButton,i)
+						end
+					end
+				end))
+				table.insert(Temps,MakeNewLabel("Title: "..v["Title"]))
+				table.insert(Temps,MakeNewLabel("Harmful: "..tostring(v["Harmful"])))
+				table.insert(Temps,MakeNewLabel("Description: "..v["Description"]))
+				table.insert(Temps,MakeNewButton("Install",function()
+					for i,v in pairs(Temps) do
+						v.Parent = game.CoreGui
+					end
+					local Label = MakeNewLabel("Installing, Please wait... ["..tostring(#v["RawString"]).." bytes]")
+					local UnusedNumber
+					local Allowed = true
+                    local TableONames = {}
+					for i = 1,45 do
+						print(i)
+						if isfile("ForsakenMods/MOD"..i..".mod") then
+                            table.insert(TableONames,game:GetService("HttpService"):JSONDecode(readfile("ForsakenMods/MOD"..i..".mod"):split("----MOD_TABLESPLIT----")[2]:split("\n")[2])["Title"])
+							if table.find(TableONames,game:GetService("HttpService"):JSONDecode(v["RawString"]:split("----MOD_TABLESPLIT----")[2]:split("\n")[2])["Title"]) then
+								Allowed = false
+							end
+						else
+							UnusedNumber = i
+							warn(i)
+							break
+						end
+					end
+					if Allowed then
+						writefile("ForsakenMods/MOD"..UnusedNumber..".mod",v["RawString"])
+						Label.Text = "Successfully installed! ["..tostring(#v["RawString"]).." bytes]"
+					else
+						Label.Text = "Sorry but, you already own this mod! Cancelling..."
+					end
+					task.wait(2)
+					Label:Destroy()
+					for i,v in pairs(Temps) do
+						if v and v.Parent then
+							v.Parent = Contents
+						else
+							table.remove(Temps,i)
+							local cl = v:Clone()
+							cl.Parent = Contents
+							task.spawn(function()
+								task.wait()
+								table.insert(Temps,cl)
+							end)
+						end
+					end
+				end))
+			end)
+			table.insert(EveryModButton,B)
+		end
+	end)
+	PN = MakeNewButton("Patch Notes",function()
+		LM.Parent = game.CoreGui
+		MM.Parent = game.CoreGui
+		PN.Parent = game.CoreGui
+		cpl.Text = "[[Patch Notes]]"
+		table.insert(Temps,MakeNewButton("Back",function()
+			for i,v in pairs(Temps) do
+				v:Destroy()
+			end
+			table.clear(Temps)
+			LM.Parent = Contents
+			MM.Parent = Contents
+			PN.Parent = Contents
+			cpl.Text = "[[Home]]"
+		end))
+
+		table.insert(Temps,MakeNewLabel("PATCH NOTES:"))
+		table.insert(Temps,MakeNewLabel("Local Mods are now accessible! [As previously fixed a bunch of errors.]"))
+		table.insert(Temps,MakeNewLabel("Now added Patch Notes"))
+		table.insert(Temps,MakeNewLabel("Local Mods are now accessible on your local machine. Used to be inside the script but now is a file."))
+		table.insert(Temps,MakeNewLabel("Marketplace Mods are now accessible! Have fun downloading mods :D"))
+		table.insert(Temps,MakeNewLabel("Added an uninstalling feature to your mods, so you can get rid of ones you dont like >:("))
+		table.insert(Temps,MakeNewLabel("Fixed a really annoying bug where if there was no mods, it would yield forever."))
+		table.insert(Temps,MakeNewLabel("Prevented reset from comepletely breaking the whole GUI."))
+        table.insert(Temps,MakeNewLabel("Prevented duplicate mods from being installed."))
+		table.insert(Temps,MakeNewLabel("More coming soon! :)"))
+	end)
+	local RunService = game:GetService("RunService")
+	local FpsLabel = script.Parent
+	local TimeFunction = RunService:IsRunning() and time or os.clock
+
+	local LastIteration, Start
+	local FrameUpdateTable = {}
+
+	local function HeartbeatUpdate()
+		LastIteration = TimeFunction()
+		for Index = #FrameUpdateTable, 1, -1 do
+			FrameUpdateTable[Index + 1] = FrameUpdateTable[Index] >= LastIteration - 1 and FrameUpdateTable[Index] or nil
+		end
+
+		FrameUpdateTable[1] = LastIteration
+		fpscl.Text = "Thanks for using my custom mod menu! FPS: "..tostring(math.floor(TimeFunction() - Start >= 1 and #FrameUpdateTable or #FrameUpdateTable / (TimeFunction() - Start)))
+	end
+	Start = TimeFunction()
+	RunService.Heartbeat:Connect(HeartbeatUpdate)
+else
+	warn("WARNING: Your exploit is unable to maintain standard File Functions, so as a result your script is now halted.")
+end
