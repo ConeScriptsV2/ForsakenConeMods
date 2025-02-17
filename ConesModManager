@@ -54,7 +54,7 @@ if isfile and writefile and readfile and isfolder and makefolder and delfile the
 		makefolder("ForsakenMods")
 	end
     local PressedOkay = true
-    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Version.Text ~= "Version: 9200 (Latest)" then
+    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Version.Text ~= "Version: 9207 (Latest)" then
         cpl.Text = "[[Alert!]]"
         PressedOkay = false
         local tmplabel = MakeNewLabel("This compile of cones mod manager is not up to date with the current game! Some mods could be patched or broken. Press okay to continue.")
@@ -274,14 +274,7 @@ if isfile and writefile and readfile and isfolder and makefolder and delfile the
 		end))
 
 		table.insert(Temps,MakeNewLabel("PATCH NOTES:"))
-		table.insert(Temps,MakeNewLabel("Local Mods are now accessible! [As previously fixed a bunch of errors.]"))
-		table.insert(Temps,MakeNewLabel("Now added Patch Notes"))
-		table.insert(Temps,MakeNewLabel("Local Mods are now accessible on your local machine. Used to be inside the script but now is a file."))
-		table.insert(Temps,MakeNewLabel("Marketplace Mods are now accessible! Have fun downloading mods :D"))
-		table.insert(Temps,MakeNewLabel("Added an uninstalling feature to your mods, so you can get rid of ones you dont like >:("))
-		table.insert(Temps,MakeNewLabel("Fixed a really annoying bug where if there was no mods, it would yield forever."))
-		table.insert(Temps,MakeNewLabel("Prevented reset from comepletely breaking the whole GUI."))
-        table.insert(Temps,MakeNewLabel("Prevented duplicate mods from being installed."))
+		table.insert(Temps,MakeNewLabel("The game updated to 9207. Every mod is functional from what i know of. Could be a hitbox hotfix."))
 		table.insert(Temps,MakeNewLabel("More coming soon! :)"))
 	end)
 	local RunService = game:GetService("RunService")
